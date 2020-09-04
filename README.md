@@ -9,4 +9,4 @@ Use notebook 00 to demo DEM + flow routing algorithms + reservoir locations to d
 * Clipped by running from command line:
 `gdalwarp -cutline ../shape/cvws.shp -crop_to_cutline srtm_dem.tif hu6_srtm_dem.tif`
 
-### Follow instructions / demo in `code/sierra_wshed_delineation.ipynb`
+### Follow instructions / demo in `code/delineate_sheds.ipynb`
