@@ -1,5 +1,5 @@
 # Sierra Nevada Watersheds
-Use this knowtebook to demo DEM + flow routing algorithms + reservoir locations to delineate upstream catchments; key for reservoir operations, agricultural, and domestic water supply in California
+Use notebook 00 to demo DEM + flow routing algorithms + reservoir locations to delineate upstream catchments; key for reservoir operations, agricultural, and domestic water supply in California
 ### Get the data and preproces
 * Use Digital Elevation Models (DEMs) and flow routing algorithms
 * Shuttle radar topography mission (SRTM) DEMS downloaded from: http://srtm.csi.cgiar.org/srtmdata/
