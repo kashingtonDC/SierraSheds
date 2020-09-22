@@ -490,7 +490,7 @@ def freq_hist(eeImage, area, scale, var_name):
 ''' 
 #############################################################################################################
 
-NetCDF Functions
+NetCDF / Gtiff Functions
 
 #############################################################################################################
 '''
@@ -503,7 +503,8 @@ def transform_from_latlon(lat, lon):
     return trans * scale
 
 def rasterize(shapes, coords, fill=np.nan, **kwargs):
-    """Rasterize a list of (geometry, fill_value) tuples onto the given
+    """
+    Rasterize a list of (geometry, fill_value) tuples onto the given
     xray coordinates. This only works for 1d latitude and longitude
     arrays.
     """
@@ -515,7 +516,30 @@ def rasterize(shapes, coords, fill=np.nan, **kwargs):
     return xr.DataArray(raster, coords=coords, dims=('lat', 'lon'))
 
 
+def write_raster(array,gdf,outfn):
+    '''
+    converts a numpy array and a geopandas gdf to a geotiff
+    Data values are stored in np.array
+    spatial coordinates stored in gdf
+    outfn - outpath
+    '''
+    
+    xmin, ymin = gdf.bounds.minx.values[0], gdf.bounds.miny.values[0]
+    xmax, ymax = gdf.bounds.maxx.values[0], gdf.bounds.maxy.values[0]
+    nrows, ncols = array.shape
+    xres = (xmax-xmin)/float(ncols)
+    yres = (ymax-ymin)/float(nrows)
+    geotransform =(xmin,xres,0,ymax,0, -yres)   
 
+    output_raster = gdal.GetDriverByName('GTiff').Create(outfn,ncols, nrows, 1 , gdal.GDT_Float32)  # Open the file
+    output_raster.SetGeoTransform(geotransform)  # Specify coords
+    srs = osr.SpatialReference()                 # Establish encoding
+    srs.ImportFromEPSG(4326)                     # WGS84 lat long
+    output_raster.SetProjection(srs.ExportToWkt() )   # Export coordinate system 
+    output_raster.GetRasterBand(1).WriteArray(array)   # Write array to raster
+    
+    print("wrote {}".format(outfn))
+    return outfn
 
 ''' 
 #############################################################################################################
