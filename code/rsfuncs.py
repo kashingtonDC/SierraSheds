@@ -16,6 +16,9 @@ import geopandas as gp
 import numpy as np
 import pandas as pd
 
+from osgeo import gdal
+from osgeo import osr
+
 from dateutil.relativedelta import relativedelta
 from shapely.ops import unary_union
 from pandas.tseries.offsets import MonthEnd
